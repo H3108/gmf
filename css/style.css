@@ -1,0 +1,103 @@
+body{font-family: Tahoma,"Microsoft YaHei","Helvetica Neue", "Roboto", "Segoe UI", sans-serif;}
+body, .ionic-body{overflow: visible;}
+a.button.button-clear{color: #fff;}
+.clear{clear: both;}
+a{text-decoration: none;}
+.has-header{top: 50px;}
+.bar-header{background-color: #2e9945;}
+.icon-chevron-thin-left.button-clear{color:#fff;}
+.icon-search.button-clear{background-color: rgba(0,0,0,0);color: #fff;}
+.item-icon-right .icon{font-size: 20px;}
+#c_foot{font-size: 0.8em;color:#ddd;}
+.bar.bar-footer{background:rgba(0,0,0,0);height:35px;}
+
+/*login */
+#login .item-input{border: 0;border-bottom: 1px solid #ccc;}
+#login .item-input input{text-align: center;font-size: 12px;}
+#login input::-o-input-placeholder{text-align: center;}
+#login input::-ms-input-placeholder{text-align: center;}
+#login input::-moz-input-placeholder{text-align: center;}
+#login input::-webkit-input-placeholder{text-align: center;}
+#login .padding{padding: 80px;margin: 20% 0 0;}
+
+
+/* choice */
+#choice .item{background-color: #eee;}
+#choice .item span{color:#666;font-size: 14px;}
+#choice .item-icon-right .icon{color:#ccc;}
+
+/* index */
+#index .has-header{top: 44px;}
+#index .con{width: 100%;height: 100%;}
+#index .con a{color:#666;}
+#index .con li{float: left;width: 23.333%;margin:3% 5%;text-align: center;}
+#index .con img{width: 100%;}
+
+/* violation */
+#violation .item{background-color: #eee;}
+#violation .item_left{float: left;}
+#violation .item_left b{line-height: 2em;display: block;}
+#violation .item_left span{color: #999;display: block;}
+#violation .item_right{float: right;color: #999;}
+#violation .item_right span{font-size: 2em;line-height: 2em;color: #666;}
+#violation .list_title{color: #999;margin:0 0 10px 10px;}
+#violation .item.item-icon-right{cursor: pointer;}
+#violation .item-icon-right .icon{color:#ccc;}
+#violation .item_menu li{float:left;color:#666;font-size: 0.8em;width: 28%;text-align: center;}
+#violation .item_menu li:nth-child(even){width: 8%;}
+#violation .item_menu li span{color:#ccc;}
+#violation .item_null{color: #999;}
+
+/* v_content */
+
+#v_content .item{background-color: #eee;}
+#v_content .item_left{float: left;}
+#v_content .item_left b{line-height: 2em;display: block;}
+#v_content .item_left span{color: #999;display: block;}
+#v_content .item_right{float: right;color: #999;}
+#v_content .item_right span{font-size: 2em;line-height: 2em;color: #666;}
+#v_content .list_title{color: #999;margin:0 0 10px 10px;}
+#v_content .list_card{width: 100%;background-color: #eee;height: 100%;padding:20px;color:#666;}
+#v_content .item-icon-right .icon{color:#ccc;}
+#v_content .item_menu li{float:left;color:#666;font-size: 0.8em;width: 28%;text-align: center;}
+#v_content .item_menu li:nth-child(even){width: 8%;}
+#v_content .item_menu li span{color:#ccc;}
+#v_content .item_menu li span{color:#ccc;}
+
+/* v_search */
+#v_search .item{background-color: #eee;}
+#v_search .item_left{float: left;}
+#v_search .item_left b{line-height: 2em;display: block;}
+#v_search .item_left span{color: #999;display: block;}
+#v_search .item_right{float: right;color: #999;}
+#v_search .item_right span{font-size: 2em;line-height: 2em;color: #666;}
+#v_search .list_title{color: #999;margin:0 0 10px 10px;}
+#v_search .list_option{width: 40%;text-align: center;}
+
+/* v_search_vio */
+
+#v_search_vio .item{background-color: #eee;}
+#v_search_vio .item_left{float: left;}
+#v_search_vio .item_left b{line-height: 2em;display: block;}
+#v_search_vio .item_left span{color: #999;display: block;}
+#v_search_vio .item_right{float: right;color: #999;}
+#v_search_vio .item_right span{font-size: 2em;line-height: 2em;color: #666;}
+#v_search_vio .list_title{color: #999;margin:0 0 10px 10px;}
+#v_search_vio .list_card{width: 100%;background-color: #eee;height: 100%;padding:20px;color:#666;}
+#v_search_vio .item-icon-right .icon{color:#ccc;}
+#v_search_vio .item_menu li{float:left;color:#666;font-size: 0.8em;width: 28%;text-align: center;}
+#v_search_vio .item_menu li:nth-child(even){width: 8%;}
+#v_search_vio .item_menu li span{color:#ccc;}
+#v_search_vio .item_menu li span{color:#ccc;}
+
+
+
+
+
+
+
+
+
+
+
+

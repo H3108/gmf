@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>violation</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+  <script src="js/mui.min.js"></script>
+</head>
+  <body id="violation">
+    <div class="bar bar-header">
+      <a class="button icon-chevron-thin-left button-clear">工贸小伙伴</a>
+      <a class="button icon-search button-clear"></a>
+    </div>
+    <div class="content has-header">
+      <div class="card">
+          <div class="item item-text-wrap">
+              <div class="item_left"></div>
+              <div class="item_right"></div>  
+              <div class="clear"></div>
+          </div>
+      </div>
+    </div>
+    <div class="content has-header ionic-pseudo">
+      <p class="list_title">最近扣分</p>
+      <div class="list">
+      </div>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+  </body>
+</html>
+<script>
+  
+$(document).ready(function(){
+
+  s_data = localStorage.obj;  //获取字符串
+  data_obj = JSON.parse(s_data);  //转换为对象
+
+  var text = "<b>"+data_obj.name+"</b><span>学号："+data_obj.number+"</span>";  
+  $(".item_left").append(text);
+  var rate = "<span>"+data_obj.rate+"</span>分"
+  $(".item_right").append(rate);
+
+  var Classnum = data_obj.number;
+
+$.ajax({
+    url: "http://gmf.gzittc.net/conduct.php",
+    data: "Classnum="+Classnum+"&jsoncallback=?",
+    type: "get",
+    dataType: "jsonp",  
+    jsonp: "jsonpcallback",
+    success: function(data) {
+    var json_data = JSON.parse(data);
+    console.log(json_data);
+    if(json_data == ''){
+      var trs = "<a class='item item-icon-right'><span class='item_null'>无</span></a>";
+      $(".list").append(trs);
+    }else{     
+      $.each(json_data, function(json_id, json_val){
+
+        if(json_val.type == 1){
+            json_val.type = '加分';
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'+'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 2){
+            json_val.type = '处分';
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 3){
+            json_val.type = '违纪';        
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 4){
+            json_val.type = '病假';        
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 5){
+            json_val.type = '迟到';        
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 6){
+            json_val.type = '事假';        
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 7){
+            json_val.type = '旷课';        
+            var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+        }else if(json_val.type == 8){
+          json_val.type = '早退';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_val.date+"</li><li><span>|</span></li><li>"+'-'+json_val.mark+"</li><li><span>|</span></li><li>"+json_val.type+"</li></ul></a>";
+      }
+
+        $(".list").append(trs);
+      }); //遍历 END
+
+      $('.ionic-pseudo .item').each(function(index) {
+        $(this).click(function(){
+           sessionStorage.setItem("s_id",index);//用sessionStorage保存转化好的的字符串 
+           location.href='v_content.html';
+          });
+      });
+    }//是否有数据
+
+    } //回调 END
+}); //ajax END 
+
+
+  /*返回事件*/
+    $('.icon-search').click(function() {
+      //打开关于页面
+      mui.openWindow({
+        url: 'v_search.html'
+      });
+    });
+
+  /*返回事件*/
+    $('.icon-chevron-thin-left').click(function() {
+      //打开关于页面
+      mui.back();
+    });
+
+
+})//预加载 END
+</script>

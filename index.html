@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>index</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+  <script src="js/ionic.min.js"></script>
+  <script src="js/mui.min.js"></script>
+</head>
+  <body id="index">
+    <div class="bar bar-header">
+      <a class="button button-clear">工贸小伙伴</a>
+      <a class="button icon-unlocked button-clear" href="login.html" id="clear_local"></a>
+    </div>
+    <div class="content  has-header ionic-pseudo">
+         <div class="list">
+           <div class="item item-image">
+             <a href="http://2huo.gzittc.net/" alt='校园二货市场'><img src="img/banner.png"></a>
+           </div>
+         </div>
+    </div>
+    <div class="content has-header ">
+      <ul class="con">
+        <li><a><img src="img/pic1.png" alt="违纪扣分"><span>违纪扣分</span></a></li>
+        <li><a><img src="img/pic_n.png" alt="限时聊天"><span>限时聊天</span></a></li>
+        <li><a><img src="img/pic_n.png" alt="课表查询"><span>课表查询</span></a></li>
+        <li><a><img src="img/pic_n.png" alt="美食点评"><span>美食点评</span></a></li>
+        <li><a><img src="img/pic_n.png" alt="活动快照"><span>活动快照</span></a></li>
+        <li><a><img src="img/pic_n.png" alt="新闻公告"><span>新闻公告</span></a></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  if (localStorage.pagecount){  //判断是否存在登录次数
+      localStorage.pagecount=Number(localStorage.pagecount) +1;
+    }
+  else{
+      localStorage.pagecount=1;
+      if (localStorage.pagecount == 1){
+              location.href="login.html";  
+          }
+    }
+
+    /*返回事件*/
+
+      $('.con li').eq(0).click(function() {
+        //打开关于页面
+        mui.openWindow({
+          url: 'violation.html',
+        });
+      });
+
+/*解绑的时候清除存储*/
+$("#clear_local").click(function(){
+  localStorage.removeItem("obj");
+})
+
+/*双击退出*/
+  var first = null;
+  var showMenu = null;
+  mui.back = function() {
+    if (showMenu) {
+      closeMenu();
+    } else {
+      //首次按键，提示‘再按一次退出应用’
+      if (!first) {
+        first = new Date().getTime();
+        mui.toast('再按一次退出应用');
+        setTimeout(function() {
+          first = null;
+        }, 1000);
+      } else {
+        if (new Date().getTime() - first < 1000) {
+          plus.runtime.quit();
+        }
+      }
+    }
+  };
+
+});
+</script>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>v_search</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+  <script src="js/mui.min.js"></script>
+</head>
+  <body id="v_search">
+    <div class="bar bar-header">
+      <a class="button icon-chevron-thin-left button-clear">违纪扣分</a>
+    </div>
+    <div class="content has-header">
+      <div class="card">
+          <div class="item item-text-wrap">
+              <div class="item_left"></div>
+              <div class="item_right"></div>  
+              <div class="clear"></div>
+          </div>
+      </div>
+    </div>
+    <div class="content has-header ionic-pseudo">
+      <div class="list">
+        <p class="list_title">违纪搜索</p>
+          <label class="item item-input item-select">
+            <div class="input-label">
+                类型
+            </div>
+            <select class="list_option">
+                <option value="1">加分</option>
+                <option value="2">处分</option>
+                <option value="3" selected>违纪</option>
+                <option value="4">病假</option>
+                <option value="5">迟到</option>
+                <option value="6">事假</option>
+                <option value="7">旷课</option>
+                <option value="8">早退</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+                年份
+            </div>
+            <select class="list_option">
+                <option data-date='2013'>2013~2014</option>
+                <option data-date='2014'>2014~2015</option>
+                <option data-date='2015' selected>2015~2016</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+                学期
+            </div>
+            <select class="list_option">
+                <option value="1" selected>第一学期</option>
+                <option value="2">第二学期</option>
+            </select>
+          </label>
+      </div>
+    </div>
+    <div class="content padding has-header">
+          <button class="button button-full button-energized">
+            <i id="c_icon_search" class="icon-search"></i>
+            搜索
+          </button>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+  </body>
+</html>
+<script>
+
+$(document).ready(function(){
+
+  data_obj = JSON.parse(localStorage.obj);  //转换为对象
+  var text = "<b>"+data_obj.name+"</b><span>学号："+data_obj.number+"</span>";  
+  $(".item_left").append(text);
+  var rate = "<span>"+data_obj.rate+"</span>分"
+  $(".item_right").append(rate);
+
+  var number = data_obj.number;
+  $('button').mousedown(function(event) {
+
+      var type = $('.list_option').eq(0).val();
+      var date = $('.list_option').eq(1).children('option:selected').attr("data-date");
+      var semester = $('.list_option').eq(2).val();
+
+      $.ajax({
+          url: "http://gmf.gzittc.net/conduct.php",
+          data: "Classnum="+number+"&type="+type+"&date="+date+"&semester="+semester+"&jsoncallback=?",
+          type: "get",
+          dataType: "jsonp",  
+          jsonp: "jsonpcallback",
+          success: function(data) {
+            var search_data = data;
+            sessionStorage.setItem("searchData",search_data);
+            location.href='v_search_vio.html';
+          }//是否有数据
+      }); //ajax END 
+  });
+
+  /*返回事件*/
+
+    $('.icon-chevron-thin-left').click(function() {
+      //打开关于页面
+      mui.back();
+    });
+
+
+});  
+
+</script>

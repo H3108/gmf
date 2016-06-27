@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>v_content</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+  <script src="js/mui.min.js"></script>
+</head>
+  <body id="v_content">
+    <div class="bar bar-header">
+      <a class="button icon-chevron-thin-left button-clear">违纪扣分</a>
+      <a class="button icon-search button-clear"></a>
+    </div>
+    <div class="content has-header">
+      <div class="card">
+          <div class="item item-text-wrap">
+              <div class="item_left"></div>
+              <div class="item_right"></div>  
+              <div class="clear"></div>
+          </div>
+      </div>
+    </div>
+    <div class="content has-header ionic-pseudo">
+      <p class="list_title">扣分详情</p>
+      <div class="list">
+      </div>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+  </body>
+</html>
+<script>
+  
+$(document).ready(function(){
+
+  data_obj = JSON.parse(localStorage.obj);  //转换为对象
+  var text = "<b>"+data_obj.name+"</b><span>学号："+data_obj.number+"</span>";  
+  $(".item_left").append(text);
+  var rate = "<span>"+data_obj.rate+"</span>分"
+  $(".item_right").append(rate);
+  
+  var Classnum = data_obj.number;
+  var session_ids = sessionStorage.getItem("s_id");//取回students变量  
+
+  $.ajax({
+      url: "http://gmf.gzittc.net/conduct.php",
+      data: "Classnum="+Classnum+"&jsoncallback=?",
+      type: "get",
+      dataType: "jsonp",  
+      jsonp: "jsonpcallback",
+      success: function(data) {
+      var json_data = JSON.parse(data);
+
+      if(json_data[session_ids].type == 1){
+          json_data[session_ids].type = '加分';
+          var trss = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'+'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 2){
+          json_data[session_ids].type = '处分';
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 3){
+          json_data[session_ids].type = '违纪';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 4){
+          json_data[session_ids].type = '病假';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 5){
+          json_data[session_ids].type = '迟到';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 6){
+          json_data[session_ids].type = '事假';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 7){
+          json_data[session_ids].type = '旷课';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }else if(json_data[session_ids].type == 8){
+          json_data[session_ids].type = '早退';        
+          var trs = "<a class='item item-icon-right'><ul class='item_menu'><li>"+json_data[session_ids].date+"</li><li><span>|</span></li><li>"+'-'+json_data[session_ids].mark+"</li><li><span>|</span></li><li>"+json_data[session_ids].type+"</li></ul></a>";
+      }
+
+      $(".list").append(trss);
+      var trss2 = "<div class='list_card'>"+json_data[session_ids].record+"</div>";
+      $(".list").append(trss2);
+
+      } //回调 END
+  }); //ajax END 
+
+
+
+  /*返回事件*/
+
+    $('.icon-chevron-thin-left').click(function() {
+      //打开关于页面
+      mui.back();
+    });
+
+    /*返回事件*/
+
+      $('.icon-search').click(function() {
+        //打开关于页面
+        mui.openWindow({
+          url: 'v_search.html'
+        });
+      });
+      
+})//预加载 END
+
+</script>

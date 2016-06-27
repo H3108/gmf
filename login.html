@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>login</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+</head>
+  <body id="login">
+    <div class="bar bar-header">
+      <a class="button button-clear">工贸小伙伴</a>
+    </div>
+    <div class="content padding has-header">
+          <label class="item item-input">
+            <input id="Classname" type="text" maxlength="4" required placeholder="请输入你的姓名">
+          </label>
+        <button id="binding" class="button button-full button-energized" name="nameGet">
+            <i id="c_icon_search" class="icon-lock"></i>
+          绑定
+        </button>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+    <div id="divCustomers"></div>
+  </body>
+</html>
+<script>
+  
+jQuery(document).ready(function(){
+
+//按钮点击事件
+$("#binding").click(function(){
+  //输入框内容
+  $Classname = $("#Classname").val();
+  //错误判断-是否为空
+  if($Classname == ''){
+    $("#Classname").attr({ placeholder: '姓名不能为空!'});
+  }else{
+    //错误判断-长度是否合适
+     if($Classname.length<2 || $Classname.length>4){
+      $("#Classname").attr({ placeholder: '姓名填写错误!'}).val('');
+     }else{
+       //错误判断-是否文中文
+       if(!$Classname.replace(/[^\u4E00-\u9FA5]/g,'')){
+         $("#Classname").attr({ placeholder: '姓名应为中文!'}).val('');
+       }else{
+         //本地储存
+         $.getJSON("http://gmf.gzittc.net/Getname.php?jsoncallback=?&Classname="+$Classname,
+          function(data){
+
+           var str_obj = data; 
+           var Students = JSON.stringify(str_obj); //将JSON对象转化成字符串 
+           sessionStorage.setItem("str_obj",Students);//用sessionStorage保存转化好的的字符串 
+           location.href='choice.html';
+
+         });//本地储存 END
+       };//错误判断-是否文中文 END
+     };//错误判断-长度是否合适 END
+  };//错误判断-是否为空 END
+
+});//按钮点击事件 END
+
+});//预加载 END
+
+</script>

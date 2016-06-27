@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>choice</title>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <link href="css/ionic.min.css" rel="stylesheet">  
+  <link href="css/icon.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src='js/jquery.js'></script>
+</head>
+  <body id="choice">
+    <div class="bar bar-header">
+      <a class="button icon-chevron-thin-left button-clear" href="login.html">工贸小伙伴</a>
+    </div>
+    <div class="content has-header ionic-pseudo">
+      <div class="list">
+      </div>
+    </div>
+    <div class="bar bar-footer">
+      <div id="c_foot" class="title">星辰工作室 版权所有 2016(内测版)</div>
+    </div>
+  </body>
+</html>
+<script>
+$(document).ready(function(){
+
+  var Students =  sessionStorage.getItem("str_obj");//取回students变量  
+  str_data = JSON.parse(Students);//把字符串转换成JSON对象  
+  if(Students == "\"\\\"\\\"\""){
+
+    var trs = "<a class='item item-icon-right' href='login.html'><span>为找到对应用户，请返回重新输入!<span><i class='icon icon-chevron-thin-left'></a>";
+     $(".list").append(trs);
+
+  }else{
+      var json_data = eval('(' + str_data + ')');
+      var item = "";
+
+      for(var p in json_data){//遍历json数组
+         var trs = "<a class='item item-icon-right'><span>"+json_data[p].name+"<br>"+json_data[p].class+"<br>"+json_data[p].number+"<span><i class='icon icon-chevron-thin-right'></i></a>";
+         item += trs;
+      }
+      //插入节点
+      $(".list").append(item);
+
+    $('.item').each(function(index) {
+      $(this).click(function(){
+
+          var ind = index;
+          var data_obj = json_data[ind]; //获取点击对应的姓名选项
+          
+          var s_data = JSON.stringify(data_obj); //把对象转换为字符串
+          localStorage.obj=s_data;  //保存字符串
+          location.href='index.html';
+
+        });
+    });
+  }//为空判断
+
+
+
+});
+</script>
